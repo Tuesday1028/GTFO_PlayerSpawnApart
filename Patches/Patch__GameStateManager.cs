@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Hikaria.PlayerSpawnApart.API;
 using Hikaria.PlayerSpawnApart.Managers;
 using SNetwork;
 
@@ -43,5 +44,12 @@ public class Patch__GameStateManager
     private static void GameStateManager__OnLevelCleanup__Postfix()
     {
         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
+    }
+
+    [HarmonyPatch(nameof(GameStateManager.SendGameState))]
+    [HarmonyPostfix]
+    private static void GameStateManager__SendGameState__Postfix()
+    {
+        SNetworkAPI.SendCustomData<pPlayerSpawnApartSlot>();
     }
 }

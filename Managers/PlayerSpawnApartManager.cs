@@ -1,6 +1,6 @@
 ﻿using GameData;
 using GTFO.API;
-using Hikaria.PlayerSpawnApart.SNetworkExt;
+using Hikaria.PlayerSpawnApart.API;
 using LevelGeneration;
 using MTFO.Managers;
 using Player;
@@ -74,7 +74,7 @@ public static class PlayerSpawnApartManager
 
         var playerAgent = PlayerManager.GetLocalPlayerAgent();
         var slot = playerAgent.Owner.LoadCustomData<pPlayerSpawnApartSlot>().slot;
-        var pos = Vector3.zero;
+        Vector3 pos;
         switch (slot)
         {
             case 1:
@@ -89,7 +89,9 @@ public static class PlayerSpawnApartManager
             case 4:
                 pos = ActivatedPlayerSpawnApartData.Slot4;
                 break;
-
+            default:
+                GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Illegal Slot[{slot}]!</color>");
+                return;
         }
 
         var dimensionIndex = Dimension.GetDimensionFromPos(pos).DimensionIndex;
@@ -155,7 +157,7 @@ public static class PlayerSpawnApartManager
         }
         if (!ChooseSlotValidate(SNet.LocalPlayer, slot))
         {
-            msg = $"<color=orange>[PlayerSpawnApart]</color> Slot[{slot}] has been assgined, please assign another slot.";
+            msg = $"<color=orange>[PlayerSpawnApart]</color> Slot[{slot}] has already been assigned, please assign another one.";
             return false;
         }
         pPlayerSpawnApartSlot data = new();
@@ -223,7 +225,7 @@ public class PlayerSpawnApartData
     public string DebugName { get; set; }
 }
 
-public struct pPlayerSpawnApartSlot : SNetworkExt.IReplicatedPlayerData
+public struct pPlayerSpawnApartSlot : API.IReplicatedPlayerData
 {
     public pPlayerSpawnApartSlot(SNet_Player player, int slot)
     {

@@ -1,4 +1,4 @@
-﻿namespace Hikaria.PlayerSpawnApart.SNetworkExt;
+﻿namespace Hikaria.PlayerSpawnApart.API;
 
 public class SNet_ReplicatedPlayerData<A> where A : struct
 {

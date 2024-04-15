@@ -1,4 +1,4 @@
-﻿namespace Hikaria.PlayerSpawnApart.SNetworkExt;
+﻿namespace Hikaria.PlayerSpawnApart.API;
 
 public static class SNetworkAPI
 {
@@ -17,15 +17,15 @@ public static class SNetworkAPI
         }
     }
 
-    public static void SendCustomData<A>(this SNetwork.SNet_Player player, SNetwork.SNet_Player toPlayer = null) where A : struct
+    public static void SendCustomData<A>(SNetwork.SNet_Player toPlayer = null) where A : struct
     {
-        if (toPlayer != null && toPlayer.IsBot)
+        if (toPlayer == null || toPlayer.IsBot)
         {
             return;
         }
         if (SNetwork.SNet.LocalPlayer != null)
         {
-            SNet_ReplicatedPlayerData<A>.SendData(SNetwork.SNet.LocalPlayer, SNetwork.SNet.GetLocalCustomData<A>(), toPlayer);
+            SNet_ReplicatedPlayerData<A>.SendData(SNetwork.SNet.LocalPlayer, GetLocalCustomData<A>(), toPlayer);
         }
         if (SNetwork.SNet.IsMaster && toPlayer != null && !toPlayer.IsBot)
         {
@@ -45,7 +45,7 @@ public static class SNetworkAPI
     {
         if (SNetwork.SNet.LocalPlayer != null)
         {
-            return LoadCustomData<A>(SNetwork.SNet.LocalPlayer);
+            return SNetwork.SNet.LocalPlayer.LoadCustomData<A>();
         }
         return default(A);
     }

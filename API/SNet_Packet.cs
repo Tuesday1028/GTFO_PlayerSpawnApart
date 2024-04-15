@@ -1,6 +1,6 @@
 ﻿using GTFO.API;
 
-namespace Hikaria.PlayerSpawnApart.SNetworkExt;
+namespace Hikaria.PlayerSpawnApart.API;
 
 public class SNet_Packet<T> where T : struct
 {

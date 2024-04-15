@@ -1,6 +1,6 @@
 ﻿using SNetwork;
 
-namespace Hikaria.PlayerSpawnApart.SNetworkExt;
+namespace Hikaria.PlayerSpawnApart.API;
 
 public interface IReplicatedPlayerData
 {
