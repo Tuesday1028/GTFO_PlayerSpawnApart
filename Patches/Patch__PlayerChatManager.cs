@@ -1,5 +1,10 @@
 ﻿using HarmonyLib;
+using Hikaria.PlayerSpawnApart.API;
 using Hikaria.PlayerSpawnApart.Managers;
+using Player;
+using SNetwork;
+using static Il2CppSystem.Globalization.CultureInfo;
+using static PlayfabMatchmakingManager.MatchResult;
 
 namespace Hikaria.PlayerSpawnApart.Patches;
 
@@ -24,6 +29,17 @@ public class Patch__PlayerChatManager
             switch (args.Length)
             {
                 case 2:
+                    if (args[1] == "show")
+                    {
+                        GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> Slot assignments:");
+                        for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+                        {
+                            var player = SNet.Slots.SlottedPlayers[i];
+                            if (player.IsBot) continue;
+                            GameEventLogManager.AddLog($"{player.NickName}</color>: Slot[{player.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
+                        }
+                        break;
+                    }
                     if (args[1] == "reset")
                     {
                         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();

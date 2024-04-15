@@ -203,11 +203,11 @@ public static class PlayerSpawnApartManager
         if (IsEveryoneReady)
         {
             GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> All players are ready:");
-            for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
+            for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
             {
-                var playerAgent = PlayerManager.PlayerAgentsInLevel[i];
-                if (playerAgent.Owner.IsBot) continue;
-                GameEventLogManager.AddLog($"{player.NickName}</color>: Slot[{data.slot}]");
+                var slottedPlayer = SNet.Slots.SlottedPlayers[i];
+                if (slottedPlayer.IsBot) continue;
+                GameEventLogManager.AddLog($"{player.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
             }
         }
     }
