@@ -19,7 +19,7 @@ public static class SNetworkAPI
 
     public static void SendCustomData<A>(SNetwork.SNet_Player toPlayer = null) where A : struct
     {
-        if (toPlayer == null || toPlayer.IsBot)
+        if (toPlayer != null && toPlayer.IsBot)
         {
             return;
         }
