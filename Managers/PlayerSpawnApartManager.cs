@@ -215,20 +215,23 @@ public static class PlayerSpawnApartManager
         {
             GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> {player.NickName}</color> assign slot[{data.slot}].");
         }
-        if (IsEveryoneReady)
+        if (GameStateManager.CurrentStateName != eGameStateName.Lobby)
         {
-            GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=green>All players are ready:</color>");
-            for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+            if (IsEveryoneReady)
             {
-                var slottedPlayer = SNet.Slots.SlottedPlayers[i];
-                if (slottedPlayer.IsBot) continue;
-                GameEventLogManager.AddLog($"{slottedPlayer.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
+                GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=green>All players are ready:</color>");
+                for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+                {
+                    var slottedPlayer = SNet.Slots.SlottedPlayers[i];
+                    if (slottedPlayer.IsBot) continue;
+                    GameEventLogManager.AddLog($"{slottedPlayer.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
+                }
             }
-        }
-        else if (CheckAllSpawnApartSlotHasConflict())
-        {
-            GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot assignments conflict, please review!</color>");
-            ShowAllAssignedSlots();
+            else if (CheckAllSpawnApartSlotHasConflict())
+            {
+                GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot assignments conflict, please review!</color>");
+                ShowAllAssignedSlots();
+            }
         }
     }
 
