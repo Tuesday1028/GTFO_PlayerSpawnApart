@@ -37,6 +37,7 @@ public class Patch__GameStateManager
     private static void GameStateManager__OnResetSession__Postfix()
     {
         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
+        Logs.LogMessage($"ResetLocalSpawnApartSlot: OnResetSession");
     }
 
     [HarmonyPatch(nameof(GameStateManager.OnLevelCleanup))]
@@ -44,6 +45,7 @@ public class Patch__GameStateManager
     private static void GameStateManager__OnLevelCleanup__Postfix()
     {
         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
+        Logs.LogMessage($"ResetLocalSpawnApartSlot: OnLevelCleanup");
     }
 
     [HarmonyPatch(nameof(GameStateManager.SendGameState))]

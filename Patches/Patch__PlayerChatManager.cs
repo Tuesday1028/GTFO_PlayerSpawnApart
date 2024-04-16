@@ -29,17 +29,13 @@ public class Patch__PlayerChatManager
                     if (args[1] == "show")
                     {
                         GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> Slot assignments:");
-                        for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
-                        {
-                            var player = SNet.Slots.SlottedPlayers[i];
-                            if (player.IsBot) continue;
-                            GameEventLogManager.AddLog($"{player.NickName}</color>: Slot[{player.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
-                        }
+                        PlayerSpawnApartManager.ShowAllAssignedSlots();
                         break;
                     }
                     if (args[1] == "reset")
                     {
                         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
+                        Logs.LogMessage("ResetLocalSpawnApartSlot: Manual reset");
                         break;
                     }
                     if (args[1] == "help")
