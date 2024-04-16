@@ -50,6 +50,7 @@ public class Patch__PlayerChatManager
                         GameEventLogManager.AddLog("<color=orange>[PlayerSpawnApart]</color> Helps:");
                         GameEventLogManager.AddLog("/psa assign [slot], assign slot for spawn apart. Range (1-4).");
                         GameEventLogManager.AddLog("/psa reset, reset assigned slot.");
+                        GameEventLogManager.AddLog("/psa show, show assigned slots.");
                         break;
                     }
                     goto default;

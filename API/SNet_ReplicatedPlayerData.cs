@@ -37,7 +37,7 @@ public class SNet_ReplicatedPlayerData<A> where A : struct
         {
             SNetwork.SNetStructs.pPlayer pPlayer = new();
             pPlayer.SetPlayer(player);
-            IReplicatedPlayerData replicatedPlayerData = (IReplicatedPlayerData)((object)data);
+            IReplicatedPlayerData replicatedPlayerData = (IReplicatedPlayerData)(object)data;
             replicatedPlayerData.PlayerData = pPlayer;
             data = (A)(object)replicatedPlayerData;
             if (toPlayer != null)
