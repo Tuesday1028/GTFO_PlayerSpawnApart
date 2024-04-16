@@ -131,15 +131,14 @@ public static class PlayerSpawnApartManager
 
     public static void ResetLocalSpawnApartSlot()
     {
-        pPlayerSpawnApartSlot data = new();
-        data.PlayerData.SetPlayer(SNet.LocalPlayer);
-        data.slot = -1;
+        pPlayerSpawnApartSlot data = new(SNet.LocalPlayer, -1);
         SNetworkAPI.SetLocalCustomData(data);
         OnPlayerSpawnApartSlotChanged(SNet.LocalPlayer, data);
     }
 
     private static bool SpawnApartSlotHasConflict(int slot)
     {
+        if (slot == -1) return false;
         for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
         {
             var player = SNet.Slots.SlottedPlayers[i];
