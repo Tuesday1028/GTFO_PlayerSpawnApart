@@ -63,7 +63,7 @@ public class Patch__PlayerChatManager
                     }
                     goto default;
                 default:
-                    throw new Exception("args length out of range.");
+                    throw new Exception();
             }
         }
         catch (Exception ex)
