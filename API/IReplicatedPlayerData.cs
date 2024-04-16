@@ -4,5 +4,5 @@ namespace Hikaria.PlayerSpawnApart.API;
 
 public interface IReplicatedPlayerData
 {
-    SNetStructs.pPlayer PlayerData { get; set; }
+    public SNetStructs.pPlayer PlayerData { get; set; }
 }

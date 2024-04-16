@@ -7,15 +7,15 @@ public class SNet_ReplicatedPlayerData<A> where A : struct
         if (s_singleton == null)
         {
             s_singleton = new();
-            s_singleton.m_syncPacket = SNet_Packet<A>.Create(eventName, OnRecieveData);
+            s_singleton.m_syncPacket = SNet_Packet<A>.Create(eventName, OnReceiveData);
         }
         s_singleton.m_onChangeCallback = callback;
     }
 
-    private static void OnRecieveData(ulong sender, A wrappedData)
+    private static void OnReceiveData(ulong sender, A wrappedData)
     {
         SNetwork.SNet_Player snet_Player;
-        if (((IReplicatedPlayerData)(object)wrappedData).PlayerData.TryGetPlayer(out snet_Player) && !snet_Player.IsLocal)
+        if (((IReplicatedPlayerData)wrappedData).PlayerData.TryGetPlayer(out snet_Player) && !snet_Player.IsLocal)
         {
             snet_Player.StoreCustomData(wrappedData);
             Action<SNetwork.SNet_Player, A> onChangeCallback = s_singleton.m_onChangeCallback;
@@ -37,9 +37,9 @@ public class SNet_ReplicatedPlayerData<A> where A : struct
         {
             SNetwork.SNetStructs.pPlayer pPlayer = new();
             pPlayer.SetPlayer(player);
-            IReplicatedPlayerData replicatedPlayerData = (IReplicatedPlayerData)(object)data;
+            IReplicatedPlayerData replicatedPlayerData = (IReplicatedPlayerData)data;
             replicatedPlayerData.PlayerData = pPlayer;
-            data = (A)(object)replicatedPlayerData;
+            data = (A)replicatedPlayerData;
             if (toPlayer != null)
             {
                 s_singleton.m_syncPacket.Send(data, SNetwork.SNet_ChannelType.SessionOrderCritical, toPlayer);

@@ -42,11 +42,19 @@ public class SNet_Packet<T> where T : struct
 
     public void Send(T data, SNetwork.SNet_ChannelType type, SNetwork.SNet_Player player = null)
     {
-        NetworkAPI.InvokeEvent(EventName, data, player, type);
+        if (player == null)
+        {
+            NetworkAPI.InvokeEvent(EventName, data, type);
+        }
+        else
+        {
+            NetworkAPI.InvokeEvent(EventName, data, player, type);
+        }
     }
 
     public void OnReceiveData(ulong sender, T data)
     {
+        m_data = data;
         if (m_hasValidateAction && SNetwork.SNet.IsMaster)
         {
             ValidateAction(m_data);

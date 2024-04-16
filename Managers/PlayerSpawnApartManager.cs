@@ -162,9 +162,7 @@ public static class PlayerSpawnApartManager
             msg = $"<color=orange>[PlayerSpawnApart]</color> Slot[{slot}] has already been assigned, please assign another one.";
             return false;
         }
-        pPlayerSpawnApartSlot data = new();
-        data.PlayerData.SetPlayer(SNet.LocalPlayer);
-        data.slot = slot;
+        pPlayerSpawnApartSlot data = new(SNet.LocalPlayer, slot);
         SNetworkAPI.SetLocalCustomData(data);
         OnPlayerSpawnApartSlotChanged(SNet.LocalPlayer, data);
         return true;
@@ -229,6 +227,10 @@ public class PlayerSpawnApartData
 
 public struct pPlayerSpawnApartSlot : API.IReplicatedPlayerData
 {
+    public pPlayerSpawnApartSlot()
+    {
+    }
+
     public pPlayerSpawnApartSlot(SNet_Player player, int slot)
     {
         this.slot = slot;
