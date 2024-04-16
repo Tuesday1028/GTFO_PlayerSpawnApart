@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
 using Hikaria.PlayerSpawnApart.API;
 using Hikaria.PlayerSpawnApart.Managers;
-using Player;
 using SNetwork;
-using static Il2CppSystem.Globalization.CultureInfo;
-using static PlayfabMatchmakingManager.MatchResult;
 
 namespace Hikaria.PlayerSpawnApart.Patches;
 
