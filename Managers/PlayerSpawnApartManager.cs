@@ -215,7 +215,7 @@ public static class PlayerSpawnApartManager
         {
             GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> {player.NickName}</color> assign slot[{data.slot}].");
         }
-        if (GameStateManager.CurrentStateName != eGameStateName.Lobby)
+        if (GameStateManager.CurrentStateName == eGameStateName.Lobby)
         {
             if (IsEveryoneReady)
             {
