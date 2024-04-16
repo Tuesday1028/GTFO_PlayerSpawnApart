@@ -168,12 +168,12 @@ public static class PlayerSpawnApartManager
         msg = string.Empty;
         if (!IsValidSlotRange(slot))
         {
-            msg = $"<color=orange>[PlayerSpawnApart]</color> Illegal slot range. Range (1-4).";
+            msg = $"<color=orange>[PlayerSpawnApart]</color> <color=red>Illegal slot range. Range (1-4).</color>";
             return false;
         }
         if (!ChooseSlotValidate(SNet.LocalPlayer, slot))
         {
-            msg = $"<color=orange>[PlayerSpawnApart]</color> Slot[{slot}] has already been assigned, please assign another one.";
+            msg = $"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot[{slot}] is not avaliable!</color>";
             return false;
         }
         pPlayerSpawnApartSlot data = new(SNet.LocalPlayer, slot);

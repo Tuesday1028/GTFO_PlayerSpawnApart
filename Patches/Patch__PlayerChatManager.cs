@@ -17,11 +17,6 @@ public class Patch__PlayerChatManager
         if (!msg.StartsWith("/psa")) return;
         try
         {
-            if (!PlayerSpawnApartManager.AllowAssign)
-            {
-                GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot assignment is only available when in the lobby.</color>");
-                return;
-            }
             var args = msg.Split(' ');
             switch (args.Length)
             {
@@ -34,6 +29,11 @@ public class Patch__PlayerChatManager
                     }
                     if (args[1] == "reset")
                     {
+                        if (!PlayerSpawnApartManager.AllowAssign)
+                        {
+                            GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot assignment is only available when in the lobby.</color>");
+                            break;
+                        }
                         PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
                         Logs.LogMessage("ResetLocalSpawnApartSlot: Manual reset");
                         break;
@@ -50,6 +50,11 @@ public class Patch__PlayerChatManager
                 case 3:
                     if (args[1] == "assign")
                     {
+                        if (!PlayerSpawnApartManager.AllowAssign)
+                        {
+                            GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot assignment is only available when in the lobby.</color>");
+                            break;
+                        }
                         if (!PlayerSpawnApartManager.TryAssignSpawnApartSlot(Convert.ToInt32(args[2]), out var reason))
                         {
                             GameEventLogManager.AddLog(reason);
