@@ -111,7 +111,7 @@ public static class PlayerSpawnApartManager
         }
     }
 
-    private static bool ChooseSlotValidate(SNet_Player player, int slot)
+    private static bool AssignSlotValidate(SNet_Player player, int slot)
     {
         if (!IsValidSlotRange(slot)) return false;
 
@@ -171,7 +171,7 @@ public static class PlayerSpawnApartManager
             msg = $"<color=orange>[PlayerSpawnApart]</color> <color=red>Illegal slot range. Range (1-4).</color>";
             return false;
         }
-        if (!ChooseSlotValidate(SNet.LocalPlayer, slot))
+        if (!AssignSlotValidate(SNet.LocalPlayer, slot))
         {
             msg = $"<color=orange>[PlayerSpawnApart]</color> <color=red>Slot[{slot}] is not avaliable!</color>";
             return false;
