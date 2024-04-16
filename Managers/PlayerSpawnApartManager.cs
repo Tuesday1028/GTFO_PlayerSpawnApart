@@ -42,7 +42,9 @@ public static class PlayerSpawnApartManager
             {
                 SNet_Player player = SNet.Slots.SlottedPlayers[i];
                 if (player.IsBot) continue;
-                if (player.LoadCustomData<pPlayerSpawnApartSlot>().slot == -1) return false;
+                var slot = player.LoadCustomData<pPlayerSpawnApartSlot>().slot;
+                    
+                if (!IsValidSlotRange(slot) || slot == -1) return false;
             }
             return true;
         }
