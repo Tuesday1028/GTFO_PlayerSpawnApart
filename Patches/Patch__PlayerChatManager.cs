@@ -62,11 +62,12 @@ public class Patch__PlayerChatManager
                     }
                     goto default;
                 default:
-                    throw new Exception();
+                    throw new Exception("args length out of range.");
             }
         }
-        catch
+        catch (Exception ex)
         {
+            Logs.LogError(ex);
             GameEventLogManager.AddLog("<color=orange>[PlayerSpawnApart]</color> <color=red>Wrong input! Type in '/psa help' to show helps.</color>");
         }
         finally

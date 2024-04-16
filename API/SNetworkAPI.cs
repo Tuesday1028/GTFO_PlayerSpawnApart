@@ -47,7 +47,7 @@ public static class SNetworkAPI
         {
             return SNetwork.SNet.LocalPlayer.LoadCustomData<A>();
         }
-        return default(A);
+        return new();
     }
 
     public static A LoadCustomData<A>(this SNetwork.SNet_Player player) where A : struct

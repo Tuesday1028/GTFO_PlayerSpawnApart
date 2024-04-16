@@ -142,8 +142,8 @@ public static class PlayerSpawnApartManager
         for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
         {
             var player = SNet.Slots.SlottedPlayers[i];
-            if (player.IsBot) continue;
-            if (!player.IsLocal && player.LoadCustomData<pPlayerSpawnApartSlot>().slot == slot) return true;
+            if (player.IsBot || player.IsLocal) continue;
+            if (player.LoadCustomData<pPlayerSpawnApartSlot>().slot == slot) return true;
         }
         return false;
     }
@@ -185,6 +185,10 @@ public static class PlayerSpawnApartManager
     private static void OnPlayerSpawnApartSlotChanged(SNet_Player player, pPlayerSpawnApartSlot data)
     {
         if (!HasActivatedPlayerSpawnApartData) return;
+        if (data.PlayerData.TryGetPlayer(out var owner))
+        {
+            Logs.LogMessage($"OnPlayerSpawnApartSlotChanged, DataOwner: {owner.NickName}, Changed player: {player.NickName}");
+        }
 
         if (!player.IsLocal && SpawnApartSlotHasConflict(data.slot))
         {
@@ -206,7 +210,7 @@ public static class PlayerSpawnApartManager
             {
                 var slottedPlayer = SNet.Slots.SlottedPlayers[i];
                 if (slottedPlayer.IsBot) continue;
-                GameEventLogManager.AddLog($"{player.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
+                GameEventLogManager.AddLog($"{slottedPlayer.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
             }
         }
     }

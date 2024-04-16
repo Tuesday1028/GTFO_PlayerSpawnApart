@@ -16,6 +16,7 @@ internal class Patch__SNet_SessionHub
         {
             SNetworkAPI.SendCustomData<pPlayerSpawnApartSlot>();
             PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
+            Logs.LogMessage($"AddPlayerToSession when LocalPlayer: {player.NickName}, ResetLocalSpawnApartSlot");
         }
         else if (!player.IsBot)
         {
