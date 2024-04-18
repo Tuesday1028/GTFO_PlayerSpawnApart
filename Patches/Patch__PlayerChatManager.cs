@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
-using Hikaria.PlayerSpawnApart.API;
 using Hikaria.PlayerSpawnApart.Managers;
-using SNetwork;
 
 namespace Hikaria.PlayerSpawnApart.Patches;
 
@@ -21,7 +19,7 @@ public class Patch__PlayerChatManager
             switch (args.Length)
             {
                 case 2:
-                    if (args[1] == "show")
+                    if (args[1] == "check")
                     {
                         GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> Slot assignments:");
                         PlayerSpawnApartManager.ShowAllAssignedSlots();
@@ -40,10 +38,10 @@ public class Patch__PlayerChatManager
                     }
                     if (args[1] == "help")
                     {
-                        GameEventLogManager.AddLog("<color=orange>[PlayerSpawnApart]</color> Helps:");
+                        GameEventLogManager.AddLog("<color=orange>[PlayerSpawnApart]</color> Commands available:");
                         GameEventLogManager.AddLog("/psa assign [slot], assign slot for spawn apart. Range (1-4).");
                         GameEventLogManager.AddLog("/psa reset, reset assigned slot.");
-                        GameEventLogManager.AddLog("/psa show, show assigned slots.");
+                        GameEventLogManager.AddLog("/psa show, check assigned slots.");
                         break;
                     }
                     goto default;

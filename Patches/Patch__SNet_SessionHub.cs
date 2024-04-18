@@ -6,7 +6,7 @@ using SNetwork;
 namespace Hikaria.PlayerSpawnApart.Patches;
 
 [HarmonyPatch(typeof(SNet_SessionHub))]
-internal class Patch__SNet_SessionHub
+public class Patch__SNet_SessionHub
 {
     [HarmonyPatch(nameof(SNet_SessionHub.AddPlayerToSession))]
     [HarmonyPostfix]
@@ -14,9 +14,8 @@ internal class Patch__SNet_SessionHub
     {
         if (player.IsLocal)
         {
-            SNetworkAPI.SendCustomData<pPlayerSpawnApartSlot>();
             PlayerSpawnApartManager.ResetLocalSpawnApartSlot();
-            Logs.LogMessage("ResetLocalSpawnApartSlot: AddLocalPlayerToSession");
+            SNetworkAPI.SendCustomData<pPlayerSpawnApartSlot>();
         }
         else if (!player.IsBot)
         {

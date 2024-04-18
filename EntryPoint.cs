@@ -25,6 +25,16 @@ public class EntryPoint : BasePlugin
         Logs.LogMessage("OK");
     }
 
+    public override bool Unload()
+    {
+        if (m_Harmony != null)
+        {
+            m_Harmony.UnpatchSelf();
+        }
+
+        return base.Unload();
+    }
+
     private static Harmony m_Harmony;
 
     public static EntryPoint Instance { get; private set; }

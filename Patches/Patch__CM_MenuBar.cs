@@ -6,7 +6,7 @@ using Hikaria.PlayerSpawnApart.Managers;
 namespace Hikaria.PlayerSpawnApart.Patches;
 
 [HarmonyPatch(typeof(CM_MenuBar))]
-internal class Patch__CM_MenuBar
+public class Patch__CM_MenuBar
 {
     [HarmonyPatch(nameof(CM_MenuBar.OnExpeditionUpdated))]
     [HarmonyPostfix]

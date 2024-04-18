@@ -16,10 +16,7 @@ public static class PlayerSpawnApartManager
     public static void Setup()
     {
         SNetworkAPI.SetupCustomData<pPlayerSpawnApartSlot>(PlayerSpawnApartEventName, OnPlayerSpawnApartSlotChanged);
-        EventAPI.OnManagersSetup += delegate
-        {
-            LevelAPI.OnEnterLevel += ApplySpawnApartData;
-        };
+        LevelAPI.OnEnterLevel += ApplySpawnApartData;
     }
     private static readonly string PlayerSpawnApartEventName = typeof(pPlayerSpawnApartSlot).FullName;
     private static List<PlayerSpawnApartData> PlayerSpawnApartDataLookup = new();
@@ -114,13 +111,14 @@ public static class PlayerSpawnApartManager
     private static bool AssignSlotValidate(SNet_Player player, int slot)
     {
         if (!IsValidSlotRange(slot)) return false;
+        if (slot == -1) return true;
 
         for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
         {
             var slottedPlayer = SNet.Slots.SlottedPlayers[i];
             if (slottedPlayer == player) continue;
 
-            if (slot != -1 && slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot == slot)
+            if (slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot == slot)
             {
                 return false;
             }
@@ -128,10 +126,7 @@ public static class PlayerSpawnApartManager
         return true;
     }
 
-    private static bool IsValidSlotRange(int slot)
-    {
-        return slot == -1 || (slot >= 1 && slot <= 4);
-    }
+    private static bool IsValidSlotRange(int slot) => slot == -1 || (slot >= 1 && slot <= 4);
 
     public static void ResetLocalSpawnApartSlot()
     {
@@ -220,12 +215,7 @@ public static class PlayerSpawnApartManager
             if (IsEveryoneReady)
             {
                 GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=green>All players are ready:</color>");
-                for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
-                {
-                    var slottedPlayer = SNet.Slots.SlottedPlayers[i];
-                    if (slottedPlayer.IsBot) continue;
-                    GameEventLogManager.AddLog($"{slottedPlayer.NickName}</color>: Slot[{slottedPlayer.LoadCustomData<pPlayerSpawnApartSlot>().slot}]");
-                }
+                ShowAllAssignedSlots();
             }
             else if (CheckAllSpawnApartSlotHasConflict())
             {

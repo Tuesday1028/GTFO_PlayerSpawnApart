@@ -5,7 +5,7 @@ using Hikaria.PlayerSpawnApart.Managers;
 namespace Hikaria.PlayerSpawnApart.Patches;
 
 [HarmonyPatch(typeof(GameDataInit))]
-internal class Patch__GameDataInit
+public class Patch__GameDataInit
 {
     [HarmonyPatch(nameof(GameDataInit.Initialize))]
     [HarmonyPostfix]

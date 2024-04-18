@@ -32,7 +32,7 @@
       <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\interop\Modules-ASM.dll</HintPath>
     </Reference>
     <Reference Include="MTFO">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\plugins\Zoersel\MTFO.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\disabled-plugins\MTFO.dll</HintPath>
     </Reference>
     <Reference Include="SNet_ASM">
       <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\GTFO\BepInEx\interop\SNet_ASM.dll</HintPath>
