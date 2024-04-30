@@ -97,6 +97,9 @@ public static class PlayerSpawnApartManager
                 return;
         }
 
+        Dimension.GetDimension(eDimensionIndex.Reality, out var reality);
+        playerAgent.RequestWarpToSync(eDimensionIndex.Reality, reality.GetStartCourseNode().Position, playerAgent.TargetLookDir, PlayerAgent.WarpOptions.None);
+
         var dimensionIndex = Dimension.GetDimensionFromPos(pos).DimensionIndex;
         if (dimensionIndex != eDimensionIndex.Reality)
         {
