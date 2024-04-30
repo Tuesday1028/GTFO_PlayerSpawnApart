@@ -1,10 +1,13 @@
-﻿using GameData;
+﻿using BepInEx.Unity.IL2CPP.Utils;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
+using GameData;
 using GTFO.API;
 using Hikaria.PlayerSpawnApart.API;
 using LevelGeneration;
 using MTFO.Managers;
 using Player;
 using SNetwork;
+using System.Collections;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
@@ -22,6 +25,7 @@ public static class PlayerSpawnApartManager
     private static List<PlayerSpawnApartData> PlayerSpawnApartDataLookup = new();
     private static uint LevelLayoutID;
     private static PlayerSpawnApartData ActivatedPlayerSpawnApartData;
+    public static bool CanDoSpawnApart { get; set; }
     private static bool HasActivatedPlayerSpawnApartData => ActivatedPlayerSpawnApartData != null;
 
     public static bool AllowAssign => GameStateManager.CurrentStateName == eGameStateName.Lobby;
@@ -74,7 +78,11 @@ public static class PlayerSpawnApartManager
     public static void ApplySpawnApartData()
     {
         if (!HasActivatedPlayerSpawnApartData) return;
+        CoroutineManager.StartCoroutine(DoSpawnApart().WrapToIl2Cpp());
+    }
 
+    private static IEnumerator DoSpawnApart()
+    {
         var playerAgent = PlayerManager.GetLocalPlayerAgent();
         var slot = playerAgent.Owner.LoadCustomData<pPlayerSpawnApartSlot>().slot;
         Vector3 pos;
@@ -94,11 +102,13 @@ public static class PlayerSpawnApartManager
                 break;
             default:
                 GameEventLogManager.AddLog($"<color=orange>[PlayerSpawnApart]</color> <color=red>Illegal Slot[{slot}]!</color>");
-                return;
+                yield break;
         }
 
         Dimension.GetDimension(eDimensionIndex.Reality, out var reality);
-        playerAgent.RequestWarpToSync(eDimensionIndex.Reality, reality.GetStartCourseNode().Position, playerAgent.TargetLookDir, PlayerAgent.WarpOptions.None);
+        playerAgent.TryWarpTo(eDimensionIndex.Reality, reality.GetStartCourseNode().Position, playerAgent.TargetLookDir, PlayerAgent.WarpOptions.None);
+
+        yield return new WaitForFixedUpdate();
 
         var dimensionIndex = Dimension.GetDimensionFromPos(pos).DimensionIndex;
         if (dimensionIndex != eDimensionIndex.Reality)
